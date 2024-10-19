@@ -14,8 +14,8 @@ namespace kovtun
 
     T & back();
     T & front();
-    void push_back(const T & val);
-    void pop_front();
+    void push(const T & val);
+    void pop();
 
     size_t size() const noexcept;
     bool empty() const noexcept;
@@ -37,13 +37,13 @@ namespace kovtun
   }
 
   template< typename T >
-  void kovtun::Queue< T >::push_back(const T & val)
+  void kovtun::Queue< T >::push(const T & val)
   {
     list_.push_back(val);
   }
 
   template< typename T >
-  void kovtun::Queue< T >::pop_front()
+  void kovtun::Queue< T >::pop()
   {
     list_.pop_front();
   }

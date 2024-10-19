@@ -23,9 +23,9 @@ int main()
 
   for (int i = 0; i < 10; i++)
   {
-    queue.push_back(i);
-    queue.pop_front();
-    queue.push_back(i + 1);
+    queue.push(i);
+    queue.pop();
+    queue.push(i + 1);
   }
   queue.front() += 5;
   queue.back() -= 1;
