@@ -12,8 +12,8 @@ namespace kovtun
     Queue() = default;
     ~Queue() = default;
 
-    T & back() const;
-    T & front() const;
+    T & back();
+    T & front();
     void push_back(const T & val);
     void pop_front();
 
@@ -25,13 +25,13 @@ namespace kovtun
   };
 
   template< typename T >
-  T & kovtun::Queue< T >::back() const
+  T & kovtun::Queue< T >::back()
   {
     return list_.back();
   }
 
   template< typename T >
-  T & kovtun::Queue< T >::front() const
+  T & kovtun::Queue< T >::front()
   {
     return list_.front();
   }

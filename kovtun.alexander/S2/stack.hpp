@@ -11,7 +11,8 @@ namespace kovtun
   public:
     Stack() = default;
     ~Stack() = default;
-    
+
+    T & top();
     void push(const T & val);
     void pop();
 

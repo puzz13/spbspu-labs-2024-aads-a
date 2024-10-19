@@ -22,8 +22,8 @@ namespace kovtun
 
     bool empty() const noexcept;
 
-    T & back() const;
-    T & front() const;
+    T & back();
+    T & front();
     void push_front(const T & val);
     void push_back(const T & val);
     void pop_front();
@@ -116,13 +116,13 @@ namespace kovtun
   }
 
   template< typename T >
-  T & List< T >::back() const
+  T & List< T >::back()
   {
     return tail_->prev->val;
   }
 
   template< typename T >
-  T & List< T >::front() const
+  T & List< T >::front()
   {
     return head_->val;
   }
