@@ -24,6 +24,12 @@ namespace kovtun
   };
 
   template< typename T >
+  T & Stack< T >::top()
+  {
+    return list_.back();
+  }
+
+  template< typename T >
   void Stack< T >::push(const T & val)
   {
     list_.push_back(val);

@@ -14,8 +14,10 @@ int main()
     stack.pop();
     stack.push(i + 1);
   }
+  stack.top() += 5;
 
   assert(stack.size() == 10);
+  assert(stack.top() == 15);
 
   kovtun::Queue< int > queue;
 
