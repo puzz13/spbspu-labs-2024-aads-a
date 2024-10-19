@@ -22,6 +22,8 @@ namespace kovtun
 
     bool empty() const noexcept;
 
+    T & back() const;
+    T & front() const;
     void push_front(const T & val);
     void push_back(const T & val);
     void pop_front();
@@ -111,6 +113,18 @@ namespace kovtun
   ConstIterator< T > List< T >::cend() const
   {
     return ConstIterator< T >(tail_);
+  }
+
+  template< typename T >
+  T & List< T >::back() const
+  {
+    return tail_->prev->val;
+  }
+
+  template< typename T >
+  T & List< T >::front() const
+  {
+    return head_->val;
   }
 
   template< typename T >

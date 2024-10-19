@@ -28,5 +28,12 @@ int main()
 
   assert(queue.size() == 10);
 
+  kovtun::List< int > testList;
+  testList.push_back(5);
+  testList.front() += 5;
+  testList.back() -= 3;
+
+  assert(testList.front() == 7);
+
   return 0;
 }
