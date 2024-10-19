@@ -25,8 +25,12 @@ int main()
     queue.pop_front();
     queue.push_back(i + 1);
   }
+  queue.front() += 5;
+  queue.back() -= 1;
 
   assert(queue.size() == 10);
+  assert(queue.back() == 9);
+  assert(queue.front() == 10);
 
   kovtun::List< int > testList;
   testList.push_back(5);
