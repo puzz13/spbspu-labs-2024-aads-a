@@ -10,9 +10,9 @@ int main()
 
   for (int i = 0; i < 10; i++)
   {
-    stack.push_back(i);
-    stack.pop_back();
-    stack.push_back(i + 1);
+    stack.push(i);
+    stack.pop();
+    stack.push(i + 1);
   }
 
   assert(stack.size() == 10);

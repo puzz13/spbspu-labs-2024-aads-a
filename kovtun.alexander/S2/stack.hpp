@@ -11,9 +11,9 @@ namespace kovtun
   public:
     Stack() = default;
     ~Stack() = default;
-
-    void push_back(const T & val);
-    void pop_back();
+    
+    void push(const T & val);
+    void pop();
 
     size_t size() const noexcept;
     bool empty() const noexcept;
@@ -23,13 +23,13 @@ namespace kovtun
   };
 
   template< typename T >
-  void Stack< T >::push_back(const T & val)
+  void Stack< T >::push(const T & val)
   {
     list_.push_back(val);
   }
 
   template< typename T >
-  void Stack< T >::pop_back()
+  void Stack< T >::pop()
   {
     list_.pop_back();
   }
