@@ -46,7 +46,7 @@ enum class TokenType
 union TokenValue
 {
   char c;
-  size_t ll;
+  long long ll;
 };
 
 struct Token
@@ -168,7 +168,7 @@ int main()
     }
   }
 
-  kovtun::Stack< size_t > result;
+  kovtun::Stack< long long > result;
   while (!expressions.empty()) {
     kovtun::Stack<Token> counter;
     auto postfixExpression = expressions.front();
@@ -181,7 +181,7 @@ int main()
       }
 
       if (t.type == TokenType::OPERATOR) {
-        size_t operands[2] = {0, 0};
+        long long operands[2] = {0, 0};
         for (int i = 0; i < 2; i++) {
           if (counter.empty()) {
             std::cerr << "invalid expression\n";
@@ -199,7 +199,7 @@ int main()
         }
 
         char _operator = t.value.c;
-        size_t result = 0;
+        long long result = 0;
 
         if (_operator == '+') {
           result = operands[0] + operands[1];
