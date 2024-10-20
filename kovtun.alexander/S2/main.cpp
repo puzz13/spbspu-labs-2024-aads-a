@@ -233,8 +233,12 @@ int main()
 
   while (!result.empty())
   {
-    std::cout << result.top() << "\t";
+    std::cout << result.top();
     result.pop();
+    if (!result.empty())
+    {
+      std::cout << " ";
+    }
   }
   std::cout << "\n";
 
