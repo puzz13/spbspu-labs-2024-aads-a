@@ -57,13 +57,10 @@ struct Token
 
 int main()
 {
-  kovtun::Stack< size_t > result;
-
-  
-
-  std::cin >> std::noskipws;
+  kovtun::Queue< kovtun::Queue< Token > > expressions;
   while (!std::cin.eof())
   {
+    std::cin >> std::noskipws;
     kovtun::Queue< Token > postfixExpression;
     kovtun::Stack< Token > operationHandler;
     char c = 0;
@@ -151,6 +148,11 @@ int main()
 
         postfixExpression.push(t);
       }
+
+      if (c == '\n')
+      {
+        break;
+      }
     }
 
     while (!operationHandler.empty())
@@ -160,30 +162,34 @@ int main()
       operationHandler.pop();
     }
 
-    kovtun::Stack< Token > counter;
-    while (!postfixExpression.empty())
+    if (!postfixExpression.empty())
     {
+      expressions.push(postfixExpression);
+    }
+  }
+
+  kovtun::Stack< size_t > result;
+  while (!expressions.empty()) {
+    kovtun::Stack<Token> counter;
+    auto postfixExpression = expressions.front();
+
+    while (!postfixExpression.empty()) {
       Token t = postfixExpression.front();
 
-      if (t.type == TokenType::OPERAND)
-      {
+      if (t.type == TokenType::OPERAND) {
         counter.push(t);
       }
 
-      if (t.type == TokenType::OPERATOR)
-      {
-        size_t operands[2] = { 0, 0 };
-        for (int i = 0; i < 2; i++)
-        {
-          if (counter.empty())
-          {
+      if (t.type == TokenType::OPERATOR) {
+        size_t operands[2] = {0, 0};
+        for (int i = 0; i < 2; i++) {
+          if (counter.empty()) {
             std::cerr << "invalid expression\n";
             return 1;
           }
 
           auto operand = counter.top();
-          if (operand.type != TokenType::OPERAND)
-          {
+          if (operand.type != TokenType::OPERAND) {
             std::cerr << "invalid expression\n";
             return 1;
           }
@@ -195,28 +201,19 @@ int main()
         char _operator = t.value.c;
         size_t result = 0;
 
-        if (_operator == '+')
-        {
+        if (_operator == '+') {
           result = operands[0] + operands[1];
-        }
-        else if (_operator == '-')
-        {
+        } else if (_operator == '-') {
           result = operands[0] - operands[1];
-        }
-        else if (_operator == '*')
-        {
+        } else if (_operator == '*') {
           result = operands[0] * operands[1];
-        }
-        else if (_operator == '/')
-        {
+        } else if (_operator == '/') {
           result = operands[0] / operands[1];
-        }
-        else if (_operator == '%')
-        {
+        } else if (_operator == '%') {
           result = operands[0] % operands[1];
         }
 
-        Token resultToken = { TokenType::OPERAND };
+        Token resultToken = {TokenType::OPERAND};
         resultToken.value.ll = result;
         counter.push(resultToken);
       }
@@ -224,14 +221,14 @@ int main()
       postfixExpression.pop();
     }
 
-    if (counter.size() != 1)
-    {
+    if (counter.size() != 1) {
       std::cerr << "invalid expression\n";
       return 1;
     }
 
     auto expressionResult = counter.top();
     result.push(expressionResult.value.ll);
+    expressions.pop();
   }
 
   while (!result.empty())
