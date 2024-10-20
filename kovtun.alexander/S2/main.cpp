@@ -59,6 +59,8 @@ int main()
 {
   kovtun::Stack< size_t > result;
 
+  
+
   std::cin >> std::noskipws;
   while (!std::cin.eof())
   {
@@ -66,10 +68,8 @@ int main()
     kovtun::Stack< Token > operationHandler;
     char c = 0;
 
-    while (std::cin && c != '\n')
+    while (std::cin >> c && c != '\n')
     {
-      std::cin >> c;
-
       if (c == ' ')
       {
         continue;
@@ -131,7 +131,7 @@ int main()
 
       if (isdigit(c))
       {
-        Token t = {TokenType::OPERAND};
+        Token t = { TokenType::OPERAND };
         std::string num;
         while (c != ' ' && c != '\n')
         {
@@ -160,20 +160,86 @@ int main()
       operationHandler.pop();
     }
 
+    kovtun::Stack< Token > counter;
     while (!postfixExpression.empty())
     {
-      if (postfixExpression.front().type == TokenType::OPERAND)
+      Token t = postfixExpression.front();
+
+      if (t.type == TokenType::OPERAND)
       {
-        std::cout << postfixExpression.front().value.ll << " ";
+        counter.push(t);
       }
-      else
+
+      if (t.type == TokenType::OPERATOR)
       {
-        std::cout << postfixExpression.front().value.c << " ";
+        size_t operands[2] = { 0, 0 };
+        for (int i = 0; i < 2; i++)
+        {
+          if (counter.empty())
+          {
+            std::cerr << "invalid expression\n";
+            return 1;
+          }
+
+          auto operand = counter.top();
+          if (operand.type != TokenType::OPERAND)
+          {
+            std::cerr << "invalid expression\n";
+            return 1;
+          }
+
+          operands[1 - i] = operand.value.ll;
+          counter.pop();
+        }
+
+        char _operator = t.value.c;
+        size_t result = 0;
+
+        if (_operator == '+')
+        {
+          result = operands[0] + operands[1];
+        }
+        else if (_operator == '-')
+        {
+          result = operands[0] - operands[1];
+        }
+        else if (_operator == '*')
+        {
+          result = operands[0] * operands[1];
+        }
+        else if (_operator == '/')
+        {
+          result = operands[0] / operands[1];
+        }
+        else if (_operator == '%')
+        {
+          result = operands[0] % operands[1];
+        }
+
+        Token resultToken = { TokenType::OPERAND };
+        resultToken.value.ll = result;
+        counter.push(resultToken);
       }
+
       postfixExpression.pop();
     }
-    std::cout << "\n";
+
+    if (counter.size() != 1)
+    {
+      std::cerr << "invalid expression\n";
+      return 1;
+    }
+
+    auto expressionResult = counter.top();
+    result.push(expressionResult.value.ll);
   }
+
+  while (!result.empty())
+  {
+    std::cout << result.top() << "\t";
+    result.pop();
+  }
+  std::cout << "\n";
 
   return 0;
 }
