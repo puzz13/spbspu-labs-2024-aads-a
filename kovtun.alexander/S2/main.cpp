@@ -201,15 +201,70 @@ int main()
         char _operator = t.value.c;
         long long result = 0;
 
-        if (_operator == '+') {
+        const long long min = std::numeric_limits< long long >::min();
+        const long long max = std::numeric_limits< long long >::max();
+        if (_operator == '+')
+        {
+          if (max - operands[0] < operands[1])
+          {
+            std::cerr << "overflow\n";
+            return 1;
+          }
           result = operands[0] + operands[1];
-        } else if (_operator == '-') {
+        }
+        else if (_operator == '-')
+        {
+          if (min + operands[0] > operands[1])
+          {
+            std::cerr << "overflow\n";
+            return 1;
+          }
           result = operands[0] - operands[1];
-        } else if (_operator == '*') {
+        }
+        else if (_operator == '*')
+        {
+          if (max / operands[1] < operands[0])
+          {
+            std::cerr << "overflow\n";
+            return 1;
+          }
+
+          if (operands[1] != 0 && min / operands[1] > operands[0])
+          {
+            std::cerr << "underflow\n";
+            return 1;
+          }
           result = operands[0] * operands[1];
-        } else if (_operator == '/') {
+        }
+        else if (_operator == '/')
+        {
+          if (operands[1] == 0)
+          {
+            std::cerr << "zero division\n";
+            return 1;
+          }
+
+          if (operands[1] == -1 && operands[0] == min)
+          {
+            std::cerr << "overflow\n";
+            return 1;
+          }
           result = operands[0] / operands[1];
-        } else if (_operator == '%') {
+        }
+        else if (_operator == '%')
+        {
+          if (operands[1] == 0)
+          {
+            std::cerr << "zero division\n";
+            return 1;
+          }
+
+          const long long mod = operands[0] % operands[1];
+          if (mod < 0)
+          {
+            result += mod;
+          }
+          
           result = operands[0] % operands[1];
         }
 
