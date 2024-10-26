@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cassert>
 
-#include "stack.hpp"
-#include "queue.h"
+#include "../common/stack.hpp"
+#include "../common/queue.h"
 
 bool isOperation(char c)
 {
@@ -264,7 +264,7 @@ int main()
           {
             result += mod;
           }
-          
+
           result = operands[0] % operands[1];
         }
 

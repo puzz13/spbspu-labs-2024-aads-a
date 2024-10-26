@@ -1,18 +1,19 @@
-#ifndef STACK_HPP
-#define STACK_HPP
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
 
-#include "../common/list/list.hpp"
+#include "list/list.hpp"
 
 namespace kovtun
 {
   template< typename T >
-  class Stack
+  class Queue
   {
   public:
-    Stack() = default;
-    ~Stack() = default;
+    Queue() = default;
+    ~Queue() = default;
 
-    T & top();
+    T & back();
+    T & front();
     void push(const T & val);
     void pop();
 
@@ -24,31 +25,37 @@ namespace kovtun
   };
 
   template< typename T >
-  T & Stack< T >::top()
+  T & kovtun::Queue< T >::back()
   {
     return list_.back();
   }
 
   template< typename T >
-  void Stack< T >::push(const T & val)
+  T & kovtun::Queue< T >::front()
+  {
+    return list_.front();
+  }
+
+  template< typename T >
+  void kovtun::Queue< T >::push(const T & val)
   {
     list_.push_back(val);
   }
 
   template< typename T >
-  void Stack< T >::pop()
+  void kovtun::Queue< T >::pop()
   {
-    list_.pop_back();
+    list_.pop_front();
   }
 
   template< typename T >
-  size_t Stack< T >::size() const noexcept
+  size_t kovtun::Queue< T >::size() const noexcept
   {
     return list_.size();
   }
 
   template< typename T >
-  bool Stack< T >::empty() const noexcept
+  bool kovtun::Queue< T >::empty() const noexcept
   {
     return size() == 0;
   }
